@@ -117,7 +117,18 @@
 
 
 
-<script src="js/game.js"></script>
+<!-- Game modules, in load order: each builds on the previous one. -->
+<script src="js/core.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/background.js"></script>
+<script src="js/state.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/update.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/flow.js"></script>
+<script src="js/input.js"></script>
+<script src="js/main.js"></script>
 <script src="js/offline.js"></script>
 </body>
 </html>

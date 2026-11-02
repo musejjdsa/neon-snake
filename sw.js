@@ -23,7 +23,7 @@ var FONT_CSS_URL = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@500;7
 
 /* Resolved relative to this worker's location (the project root). */
 var PRECACHE_URLS = [
-  './', 'index.html', 'css/style.css', 'js/game.js', 'js/offline.js',
+  './', 'index.html', 'css/style.css', 'js/core.js', 'js/audio.js', 'js/background.js', 'js/state.js', 'js/combat.js', 'js/update.js', 'js/render.js', 'js/ui.js', 'js/flow.js', 'js/input.js', 'js/main.js', 'js/offline.js',
   'manifest.webmanifest', 'assets/icon-192.png', 'assets/icon-512.png',
   'assets/icon-maskable-512.png', 'assets/apple-touch-icon.png',
   FONT_CSS_URL
