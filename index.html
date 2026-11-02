@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="data:," />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#020208" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Neon Snake" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<title>Neon Snake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+  <div id="hud">
+    <div class="stat"><div class="lab">SCORE</div><div class="val" id="uiScoreWrap" title="Score: 0"><span class="num" id="uiScore">0</span></div></div>
+    <div class="stat hi"><div class="lab">BEST</div><div class="val" id="uiBestWrap" title="Best: 0"><span class="hicon" aria-hidden="true">★</span><span class="num" id="uiBest">0</span></div></div>
+    <div class="stat wv"><div class="lab">WAVE</div><div class="val" title="Wave"><span class="hicon" aria-hidden="true">W</span><span class="num" id="uiWave">1</span></div></div>
+    <button class="iconbtn musicbtn" id="btnMusic" aria-label="Toggle background music" aria-pressed="true" title="Music (M)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l10-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+    </button>
+    <button class="iconbtn" id="btnSound" aria-label="Toggle sound effects" title="Sound effects on / off">
+      <svg viewBox="0 0 24 24" id="icoSndOn"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9c1.2 1.6 1.2 4.4 0 6M18.5 6.5c2.4 3.2 2.4 7.8 0 11"/></svg>
+      <svg viewBox="0 0 24 24" id="icoSndOff" style="display:none"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"/><path d="M16 9l6 6M22 9l-6 6"/></svg>
+    </button>
+    <button class="iconbtn" id="btnPause" aria-label="Pause game" title="Pause">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>
+    </button>
+    <button class="iconbtn" id="btnFullscreen" aria-label="Enter fullscreen" title="Enter fullscreen">
+      <svg viewBox="0 0 24 24" id="icoFsEnter" aria-hidden="true"><path d="M4 9V5a1 1 0 0 1 1-1h4M20 9V5a1 1 0 0 0-1-1h-4M4 15v4a1 1 0 0 0 1 1h4M20 15v4a1 1 0 0 1-1 1h-4"/></svg>
+      <svg viewBox="0 0 24 24" id="icoFsExit" style="display:none" aria-hidden="true"><path d="M9 4v4a1 1 0 0 1-1 1H4M15 4v4a1 1 0 0 0 1 1h4M9 20v-4a1 1 0 0 0-1-1H4M15 20v-4a1 1 0 0 1 1-1h4"/></svg>
+    </button>
+    <div class="netdot" id="netDot" role="img" aria-label="Caching the game for offline play" title="Caching for offline play"></div>
+    <div class="padind" id="padIndicator" role="img" aria-label="Controller connected" title="Controller connected">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10a5 5 0 0 1 4.9 6l-.6 3A2.5 2.5 0 0 1 17.4 19l-2.7-2.6a2 2 0 0 0-1.4-.6H10.7a2 2 0 0 0-1.4.6L6.6 19a2.5 2.5 0 0 1-3.9-2l-.6-3A5 5 0 0 1 7 8z"/><path d="M7.5 11v4M5.5 13h4"/><circle cx="16" cy="12" r=".4" fill="currentColor"/><circle cx="18" cy="14" r=".4" fill="currentColor"/></svg>
+    </div>
+  </div>
+
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="banner"></div>
+
+    <div class="overlay on" id="ovStart">
+      <div class="panel">
+        <h1 class="title">NEON <span class="alt">SNAKE</span></h1>
+        <p class="tagline">Blast it. Dodge it. Grab the drops.</p>
+        <div class="legend" aria-label="Pickups">
+          <div class="leg"><span class="lic" style="color:#2ee9ff">▸</span><span>Gun +</span></div>
+          <div class="leg"><span class="lic" style="color:#c44dff">✈</span><span>Wing · 18s</span></div>
+          <div class="leg"><span class="lic" style="color:#ffe14d">⚡</span><span>Rapid</span></div>
+          <div class="leg"><span class="lic" style="color:#ff2b3e">✸</span><span>Bomb</span></div>
+          <div class="leg"><span class="lic" style="color:#6ab8ff">◷</span><span>Slow</span></div>
+          <div class="leg"><span class="lic" style="color:#ff5b6a">✚</span><span>Hull +</span></div>
+          <div class="leg"><span class="lic" style="color:#ff9f1c">⇈</span><span>Missiles ×2</span></div>
+          <div class="leg"><span class="lic" style="color:#59f7ff">◎</span><span>Bubble</span></div>
+        </div>
+        <p class="warnrow"><span class="pink">●</span> Dodge &nbsp;·&nbsp; <span class="amber">⚠</span> Surge &nbsp;·&nbsp; 👆 Drag &nbsp;·&nbsp; 👆👆 <span class="amber">✸</span> &nbsp;·&nbsp; 🎮 Pad</p>
+        <button class="bigbtn" id="btnStart" aria-label="Launch">▶</button>
+        <div class="hiscoreLine" id="startBest">★ 0</div>
+      </div>
+    </div>
+
+    <div class="overlay" id="ovPause">
+      <div class="panel">
+        <h1 class="title" style="font-size:clamp(30px,9vw,44px)">⏸</h1>
+        <button class="bigbtn" id="btnResume" aria-label="Resume">▶</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="ovOver">
+      <div class="panel">
+        <h1 class="title">GAME <span class="alt">OVER</span></h1>
+        <p class="sub" id="overSub">BREACHED</p>
+        <div id="newBest">★ NEW BEST</div>
+        <div class="finalStats">
+          <div class="fs"><div class="val" id="finScore">0</div></div>
+          <div class="fs"><div class="lab">W</div><div class="val" id="finWave">1</div></div>
+          <div class="fs"><div class="lab">★</div><div class="val" id="finBest">0</div></div>
+        </div>
+        <button class="bigbtn" id="btnRetry" aria-label="Retry">↻</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="bar">
+    <div class="meters">
+      <div class="meter" title="Hull">
+        <span class="micon hull-i" aria-hidden="true">♥</span>
+        <div class="pips" id="hullPips"></div>
+      </div>
+      <div class="meter" title="Blaster">
+        <span class="micon gun-i" aria-hidden="true">▸</span>
+        <div class="pips" id="gunPips"></div>
+        <div id="rapidTag">⚡ 0</div>
+      </div>
+      <div class="meter" title="Wing ships">
+        <span class="micon wing-i" aria-hidden="true">✈</span>
+        <div class="pips" id="shipPips"></div>
+      </div>
+    </div>
+    <div class="slotWrap">
+      <div class="itemLabel empty" id="itemLabel" aria-live="polite">SPECIAL · EMPTY</div>
+      <div class="slots" id="itemSlots" role="group" aria-label="Special item slots"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script src="js/game.js"></script>
+<script src="js/offline.js"></script>
+</body>
+</html>

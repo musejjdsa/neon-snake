@@ -1,0 +1,32 @@
+{
+  "background_color": "#020208",
+  "description": "Neon retro vertical shooter: blast the descending serpent, grab the drops, and protect your hull.",
+  "display": "standalone",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "192x192",
+      "src": "assets/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "assets/icon-512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "assets/icon-maskable-512.png",
+      "type": "image/png"
+    }
+  ],
+  "id": "./index.html",
+  "name": "Neon Snake",
+  "orientation": "portrait",
+  "scope": "./",
+  "short_name": "Neon Snake",
+  "start_url": "./index.html",
+  "theme_color": "#020208"
+}
