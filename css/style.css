@@ -97,13 +97,18 @@
      Two balanced groups, vertically centred against each other: the
      three meters stack in a column on the left (one row per system,
      sized to match the special-slots block), the label + slots sit on
-     the right. Nothing floats at the top of an empty panel. */
+     the right. Nothing floats at the top of an empty panel.
+     Stability rule: the bar's size depends only on viewport width,
+     never on game state. The slots row always reserves all five slots
+     and the rapid-fire tag always occupies its space (hidden, not
+     removed), so collecting items or triggering rapid fire can never
+     flip the bar between one and two lines mid-game.*/
   #bar{
     display:flex; align-items:center; flex-wrap:wrap; gap:10px 18px; padding:12px 14px calc(12px + env(safe-area-inset-bottom));
     background:linear-gradient(0deg, rgba(10,14,34,.95), rgba(6,8,20,.85));
     border-top:1px solid var(--line); z-index:5;
   }
-  .meters{ flex:0 1 auto; display:flex; flex-direction:column; justify-content:center; gap:9px; min-width:0; }
+  .meters{ flex:0 0 auto; display:flex; flex-direction:column; justify-content:center; gap:9px; min-width:0; }
   .meter{ flex:0 0 auto; display:flex; align-items:center; gap:8px; }
   .meter .micon{ font-size:19px; line-height:1; width:23px; text-align:center; flex:0 0 23px; }
   .meter .micon.hull-i{ color:var(--red); text-shadow:0 0 7px rgba(255,43,62,.8); }
@@ -117,12 +122,12 @@
   .pip.hull{ border-color:rgba(255,43,62,.55); }
   .pip.hull.on{ background:var(--red); box-shadow:0 0 7px rgba(255,43,62,.85); }
   #rapidTag{
-    display:none; font-family:"Orbitron",monospace; font-size:13px; font-weight:700; color:#ffe14d;
+    display:block; visibility:hidden; min-width:34px; font-family:"Orbitron",monospace; font-size:13px; font-weight:700; color:#ffe14d;
     text-shadow:0 0 8px rgba(255,225,77,.8); white-space:nowrap;
   }
-  #rapidTag.on{ display:block; }
+  #rapidTag.on{ visibility:visible; }
   .slotWrap{
-    margin-left:auto; flex:0 1 auto; display:flex; flex-direction:column; align-items:flex-end; justify-content:center; gap:7px; min-width:0;
+    margin-left:auto; flex:0 0 auto; display:flex; flex-direction:column; align-items:flex-end; justify-content:center; gap:7px; min-width:0;
   }
   .itemLabel{
     font-family:"Orbitron",monospace; font-size:10px; font-weight:700; letter-spacing:.1em; line-height:1;
@@ -130,7 +135,7 @@
     text-shadow:0 0 7px rgba(255,176,46,.45);
   }
   .itemLabel.empty{ color:var(--dim); text-shadow:none; }
-  .slots{ display:flex; gap:6px; }
+  .slots{ display:flex; gap:6px; width:284px; justify-content:flex-end; }
   .slot{
     --sc:var(--amber);
     flex:0 0 auto; width:52px; height:52px; padding:0; cursor:pointer; border-radius:12px;
